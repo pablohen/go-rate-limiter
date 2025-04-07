@@ -31,3 +31,9 @@ for i in {1..6}; do curl http://localhost:8080; done
 ```zsh
 for i in {1..11}; do curl -H "API_KEY: test-token" http://localhost:8080; done
 ```
+
+### Running tests locally:
+
+```zsh
+go test ./... -count=1
+```
