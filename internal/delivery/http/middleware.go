@@ -42,9 +42,17 @@ func RateLimiterMiddleware(rl limiter.RateLimiter) func(http.Handler) http.Handl
 }
 
 func getIP(r *http.Request) string {
-	ip := r.RemoteAddr
+	ip := removePortFromIP(r.RemoteAddr)
 	if forwarded := r.Header.Get("X-Forwarded-For"); forwarded != "" {
-		ip = strings.Split(forwarded, ",")[0]
+		firstForwardedAddress := strings.Split(forwarded, ",")[0]
+		ip = removePortFromIP(strings.TrimSpace(firstForwardedAddress))
+	}
+	return ip
+}
+
+func removePortFromIP(ip string) string {
+	if strings.Contains(ip, ":") {
+		return strings.Split(ip, ":")[0]
 	}
 	return ip
 }

@@ -146,10 +146,20 @@ func TestGetIP(t *testing.T) {
 	}
 
 	req = httptest.NewRequest(http.MethodGet, "/test", nil)
-	req.RemoteAddr = "192.168.1.1:12345"
+	req.RemoteAddr = "192.168.1.1"
 	ip = getIP(req)
 
-	if ip != "192.168.1.1:12345" {
-		t.Errorf("expected IP 192.168.1.1:12345, got %s", ip)
+	if ip != "192.168.1.1" {
+		t.Errorf("expected IP 192.168.1.1, got %s", ip)
+	}
+}
+
+func TestRemovePortFromIP(t *testing.T) {
+	ip := "192.168.1.1:8080"
+	expected := "192.168.1.1"
+	result := removePortFromIP(ip)
+
+	if result != expected {
+		t.Errorf("expected IP %s, got %s", expected, result)
 	}
 }

@@ -17,7 +17,7 @@ cp cmd/server/.env.example cmd/server/.env
 3. Create the containers:
 
 ```zsh
-docker-compose up -d
+docker compose up --build
 ```
 
 4. Test IP-based limiting (should return 429 after 5 requests):
